@@ -1,1 +1,3 @@
-# cyphercombat
+# Cypher System Combat Tracker
+
+Beta test...

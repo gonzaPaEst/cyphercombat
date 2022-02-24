@@ -1,0 +1,154 @@
+.grid-start-2 {
+  grid-column-start: 2;
+}
+
+.grid-start-3 {
+  grid-column-start: 3;
+}
+
+.grid-start-4 {
+  grid-column-start: 4;
+}
+
+.grid-start-5 {
+  grid-column-start: 5;
+}
+
+.grid-start-6 {
+  grid-column-start: 6;
+}
+
+.grid-start-7 {
+  grid-column-start: 7;
+}
+
+.grid-start-8 {
+  grid-column-start: 8;
+}
+
+.grid-start-9 {
+  grid-column-start: 9;
+}
+
+.grid-start-10 {
+  grid-column-start: 10;
+}
+
+.grid-start-11 {
+  grid-column-start: 11;
+}
+
+.grid-start-12 {
+  grid-column-start: 12;
+}
+
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+
+.grid-2row {
+  display: grid;
+  grid-row: span 2 / span 2;
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+#combat-tracker .combat-input {
+  line-height: normal;
+  align-self: center;
+  text-align: center;
+}
+
+#combat-tracker .combat-input input {
+  color: white;
+}
+
+#combat-tracker .combat-input p {
+  height: 26px;
+  margin: 1px;
+  padding-top: 4px;
+}
+
+#combat-tracker li.combatant .token-name {
+  align-self: center;
+}
+
+#combat-tracker .img-div {
+  line-height: normal;
+  text-align: center;
+}
+
+#combat-tracker li.combatant .roll {
+  background-size: 22px;
+  height: 22px;
+  margin: auto;
+}
+
+#combat-tracker .combat-input label {
+  font-size: 0.7rem;
+}
+
+#combat-tracker .fa-solid {
+  font-weight: 900;
+}
+
+#combat-tracker li.combatant .token-name .combatant-control {
+  flex: 0 0 16px;
+  padding: 1px;
+}
+
+#combat-tracker .PC {
+  background: rgb(1, 71, 138, 0.2);
+}
+
+#combat-tracker :is(.NPC, .Companion, .Community, .Vehicle, .Token) {
+  background: rgb(90, 9, 9, 0.2);
+}
+
+#combat-tracker span.initiative {
+  border: 1px dotted;
+  padding: 1.5px 3px;
+  background-size: 22px;
+  height: 22px;
+  margin: auto;
+  display: inline-block;
+}
