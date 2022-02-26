@@ -1,7 +1,6 @@
 <ol id="combat-tracker" class="directory-list combatants">
-  {{#each combatants as |combatantGroup group|}}
-      {{#each combatantGroup as |c index|}}
-        <li class="combatant {{c.actor.data.type}} directory-item actor-elem grid grid-11col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
+  {{#each combatants as |c|}}
+        <li class="combatant {{c.actor.data.type}} directory-item actor-elem grid grid-12col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
           {{!-- Token image --}}
           <div class="grid-span-2 img-div">
               <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
@@ -14,24 +13,27 @@
               </div>
           </div>
           {{!-- Name. --}}
-          <div class="token-name grid-span-3">
+          <div class="token-name grid-span-4">
               <h4>{{c.name}}</h4>
               <div class="combatant-controls flexrow">
                     {{#if c.editable}}
-                      <a class="combatant-control {{#if this.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+                      <a class="combatant-control {{#if c.hid}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
                           <i class="fas fa-eye-slash"></i>
-                          </a>
-                      <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="Mark Dead" data-control="markDead">
-                          <i class="fas fa-skull"></i>
-                          </a>
+                      </a>
                       {{#ifCond c.actor.data.type '==' "PC"}}
-                      <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="Mark Debilitated" data-control="markDebilitated">
+                      <a class="combatant-control {{#if c.hale}}active{{/if}}" title="Hale" data-control="markHale">
+                        <i class="fas fa-check-circle"></i>
+                      </a>
+                      <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="Impaired" data-control="markImpaired">
+                          <i class="fas fa-tired"></i>
+                      </a>                      
+                      <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
                           <i class="fas fa-user-injured"></i>
                       </a>
-                      <a class="combatant-control {{#if this.defeated}}active{{/if}}" title="Mark Impaired" data-control="markImpaired">
-                          <i class="fas fa-tired"></i>
-                      </a>
                       {{/ifCond}}
+                      <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+                          <i class="fas fa-skull"></i>
+                      </a>
                     {{/if}}
                 </div>
           </div>
@@ -94,6 +96,5 @@
           </div>
           {{/ifCond}}
         </li>
-      {{/each}}
   {{/each}}
 </ol>

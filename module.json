@@ -16,10 +16,7 @@
   "esmodules": [
     "/module/cyphercombat.mjs"
   ],
-  "scripts": [
-    "/module/helpers/combat.mjs",
-    "/module/helpers/handlerbars.mjs"
-  ],
+  "scripts": [],
   "styles": [
     "/styles/cyphercombat.css"
   ],
