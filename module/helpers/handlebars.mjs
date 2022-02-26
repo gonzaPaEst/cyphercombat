@@ -22,6 +22,23 @@ export class registerHelpers {
             return Math.ceil(int);
         });
 
+        Handlebars.registerHelper('disposition', function (int) {
+            switch (int) {
+                case -1:
+                    return "hostile";
+                case 0:
+                    return "neutral";
+                case 1:
+                    return "friendly";
+                default:
+                    return "neutral";
+            }
+        });
+
+        Handlebars.registerHelper('log', function (object) {
+            console.log(object);
+        });
+
         Handlebars.registerHelper('ifCond', function (arg1, operator, arg2, options) {
 
             switch (operator) {

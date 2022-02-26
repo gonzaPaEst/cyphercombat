@@ -1,6 +1,6 @@
 <ol id="combat-tracker" class="directory-list combatants">
   {{#each combatants as |c|}}
-  <li class="combatant {{c.actor.data.type}} directory-item actor-elem grid grid-12col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
+  <li class="combatant {{#ifCond c.actor.data.type '==' "PC"}}PC{{else}}{{disposition c.token.data.disposition}}{{/ifCond}} directory-item actor-elem grid grid-12col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
     {{!-- Token image --}}
     <div class="grid-span-2 img-div">
       <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
@@ -22,10 +22,10 @@
         </a>
         {{#ifCond c.actor.data.type '==' "PC"}}
         <a class="combatant-control {{#if c.hale}}active{{/if}}" title="Hale" data-control="markHale">
-          <i class="fas fa-check-circle"></i>
+          <i class="fas fa-heart"></i>
         </a>
         <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="Impaired" data-control="markImpaired">
-          <i class="fas fa-tired"></i>
+          <i class="fas fa-heartbeat"></i>
         </a>
         <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
           <i class="fas fa-user-injured"></i>
