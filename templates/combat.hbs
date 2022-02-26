@@ -6,7 +6,12 @@
       <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
       <div class="token-initiative">
         {{#if c.hasRolled}}
+        {{#ifCond c.actor.data.type '==' "PC"}}
         <span class="initiative">{{roundUp c.initiative}}</span>
+        {{else}}
+        {{log c}}
+        <span class="initiative">{{c.actor.data.data.level}} ({{roundUp c.initiative}})</span>
+        {{/ifCond}}
         {{else if c.editable}}
         <a class="combatant-control roll" title="{{localize 'COMBAT.InitiativeRoll'}}" data-control="rollInitiative"></a>
         {{/if}}
@@ -14,7 +19,7 @@
     </div>
     {{!-- Name. --}}
     <div class="token-name grid-span-4">
-      <h4>{{c.name}}</h4>
+      <p class="truncate">{{c.name}}</p>
       <div class="combatant-controls flexrow">
         {{#if c.editable}}
         <a class="combatant-control {{#if c.hid}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
@@ -83,15 +88,15 @@
       {{else}}???{{/if}}
     </div>
     <div class="grid-span-2 combat-input">
-      <label for="armor">Armor</label>
-      {{#if c.editable}}
-      <p>{{c.actor.data.data.armor}}</p>
-      {{else}}???{{/if}}
-    </div>
-    <div class="grid-span-2 combat-input">
       <label for="damage">Damage</label>
       {{#if c.editable}}
       <p>{{c.actor.data.data.damage}}</p>
+      {{else}}???{{/if}}
+    </div>
+    <div class="grid-span-2 combat-input">
+      <label for="armor">Armor</label>
+      {{#if c.editable}}
+      <p>{{c.actor.data.data.armor}}</p>
       {{else}}???{{/if}}
     </div>
     {{/ifCond}}
