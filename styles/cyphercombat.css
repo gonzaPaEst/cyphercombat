@@ -92,6 +92,11 @@
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
+#combat li.combatant .token-image {
+  height: auto;
+  width: auto;
+}
+
 #combat-tracker .combat-input {
   line-height: normal;
   align-self: center;
@@ -145,7 +150,7 @@
 }
 
 #combat-tracker span.initiative {
-  border: 1px dotted;
+  border: none;
   padding: 1.5px 3px;
   background-size: 22px;
   height: 22px;
