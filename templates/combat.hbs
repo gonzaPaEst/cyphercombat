@@ -19,7 +19,9 @@
     </div>
     {{!-- Name. --}}
     <div class="token-name grid-span-4">
-      <p class="truncate">{{c.name}}</p>
+      <div class="name-textbox">
+        <p class="truncate">{{c.name}}</p>
+      </div>
       <div class="combatant-controls flexrow">
         {{#if c.editable}}
         <a class="combatant-control {{#if c.hid}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">

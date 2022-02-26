@@ -117,8 +117,15 @@
   align-self: center;
 }
 
+#combat-tracker .name-textbox {
+  height: 46px;
+  display: flex;
+  align-items: center;
+}
+
 #combat-tracker .truncate {
   line-height: 1;
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
