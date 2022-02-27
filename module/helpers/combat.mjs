@@ -184,7 +184,7 @@ export class CypherCombatSidebar {
     });
 
     Hooks.on('updateToken', (scene, token, data, options, id) => {
-      if (data.actorData) {
+      if (data) {
         ui.combat.render();
       }
     });
