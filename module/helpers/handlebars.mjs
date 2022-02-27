@@ -38,33 +38,5 @@ export class registerHelpers {
         Handlebars.registerHelper('log', function (object) {
             console.log(object);
         });
-
-        Handlebars.registerHelper('ifCond', function (arg1, operator, arg2, options) {
-
-            switch (operator) {
-                case '==':
-                    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-                case '===':
-                    return (arg1 === arg2) ? options.fn(this) : options.inverse(this);
-                case '!=':
-                    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
-                case '!==':
-                    return (arg1 !== arg2) ? options.fn(this) : options.inverse(this);
-                case '<':
-                    return (arg1 < arg2) ? options.fn(this) : options.inverse(this);
-                case '<=':
-                    return (arg1 <= arg2) ? options.fn(this) : options.inverse(this);
-                case '>':
-                    return (arg1 > arg2) ? options.fn(this) : options.inverse(this);
-                case '>=':
-                    return (arg1 >= arg2) ? options.fn(this) : options.inverse(this);
-                case '&&':
-                    return (arg1 && arg2) ? options.fn(this) : options.inverse(this);
-                case '||':
-                    return (arg1 || arg2) ? options.fn(this) : options.inverse(this);
-                default:
-                    return options.inverse(this);
-            }
-        });
     }
 }

@@ -105,12 +105,17 @@
 
 #combat-tracker .combat-input input {
   color: white;
+  height: 20px;
+}
+
+#combat-tracker .combat-input input.hidden {
+  color: var(--color-text-light-7);
 }
 
 #combat-tracker .combat-input p {
-  height: 26px;
-  margin: 1px;
-  padding-top: 4px;
+  height: 20px;
+  margin: 0;
+  padding-top: 1px;
 }
 
 #combat-tracker li.combatant .token-name {
@@ -121,17 +126,6 @@
   height: 46px;
   display: flex;
   align-items: center;
-}
-
-#combat-tracker .truncate {
-  line-height: 1;
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-          line-clamp: 2; 
-  -webkit-box-orient: vertical;
 }
 
 #combat-tracker .img-div {
@@ -145,6 +139,10 @@
   margin: auto;
 }
 
+#combat-tracker li.combatant .roll.hidden {
+  filter: brightness(0.4);
+}
+
 #combat-tracker .combat-input label {
   font-size: 0.7rem;
 }
@@ -156,6 +154,40 @@
 #combat-tracker li.combatant .token-name .combatant-control {
   flex: 0 0 16px;
   padding: 1px;
+}
+
+#combat-tracker .combatant-controls {
+  height: 42px;
+  padding: 0;
+  vertical-align: bottom;
+  line-height: 1;
+}
+
+#combat-tracker .combatant-buttons {
+  color: var(--color-text-dark-5);
+  text-align: left;
+  line-height: 1.3;
+  padding-top: 0;
+  padding-bottom: 3px;
+  max-width: 49px;
+  width: 49px;
+}
+
+#combat-tracker .combatant-buttons.pc {
+  max-width: 98px;
+  width: 98px;
+}
+
+#combat-tracker .combatant-buttons .active {
+  color: var(--color-text-light-1);
+}
+
+#combat-tracker .combatant-values {
+  text-align: center;
+  text-align: -webkit-center;
+  padding-top: 0;
+  max-width: 49px;
+  width: 49px;
 }
 
 #combat-tracker .combatant {
@@ -185,4 +217,36 @@
   height: 22px;
   margin: auto;
   display: inline-block;
+}
+
+#combat-tracker .combat-table {
+  border: none;
+  background: none;
+  margin-bottom: 0;
+}
+
+#combat-tracker .combat-table .combatant-name {
+  width: 240px;
+}
+
+#combat-tracker .combat-table .combatant-name p {
+  width: 240px;
+  line-height: 1;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#combat-tracker .combat-table .truncate {
+  font-size: 0.7rem;
+  height: 16px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#combat-tracker table tr:nth-child(even) {
+  background: none;
 }
