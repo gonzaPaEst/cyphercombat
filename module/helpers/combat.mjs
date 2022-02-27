@@ -159,9 +159,6 @@ export class CypherCombatSidebar {
             } else {
               combatant.actor.update({ "data.damage.damageTrack": 'Debilitated' })
             }
-            if (combatant.isDefeated) {
-              toggleDefeatedStatus(combatant);
-            }
             break;
           case "markDead":
             if (combatant.actor.type == 'PC') {
@@ -170,8 +167,9 @@ export class CypherCombatSidebar {
               } else {
                 combatant.actor.update({ "data.damage.damageTrack": 'Dead' })
               }
+            } else if (combatant.actor.type != 'PC') {
+              toggleDefeatedStatus(combatant);
             }
-            toggleDefeatedStatus(combatant);
             break;
           // Roll combatant initiative
           case "rollInitiative":

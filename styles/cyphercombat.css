@@ -97,6 +97,10 @@
   width: auto;
 }
 
+#combat-tracker .defeated {
+  color: #b32019;
+}
+
 #combat-tracker .combat-input {
   line-height: normal;
   align-self: center;
@@ -236,6 +240,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
 #combat-tracker .combat-table .truncate {

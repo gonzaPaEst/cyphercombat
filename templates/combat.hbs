@@ -19,7 +19,7 @@
       <table class="combat-table">
         <tr>
           <td class="combatant-name" colspan="100">
-            <p>{{c.name}}</p>
+            <p class="{{#if (or c.isDefeated c.dead)}}defeated{{/if}}">{{c.name}}</p>
           </td>
         </tr>
         <tr class="combatant-controls">
@@ -81,7 +81,7 @@
             <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
               <i class="fas fa-eye-slash"></i>
             </a>
-            <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
               <i class="fas fa-skull"></i>
             </a>
             {{/if}}
@@ -122,7 +122,7 @@
             <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
               <i class="fas fa-eye-slash"></i>
             </a>
-            <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
               <i class="fas fa-skull"></i>
             </a>
             {{/if}}
@@ -171,7 +171,7 @@
             <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
               <i class="fas fa-eye-slash"></i>
             </a>
-            <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
               <i class="fas fa-skull"></i>
             </a>
             {{/if}}
