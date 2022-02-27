@@ -1,6 +1,5 @@
 <ol id="combat-tracker" class="directory-list combatants">
   {{#each combatants as |c|}}
-  {{log c.isObserver}}
   {{#if (or c.isOwner (eq c.hidden false))}}
   <li class="combatant {{#if c.hidden}}hidden{{/if}} {{#if (eq c.actor.data.type "PC")}}PC{{else}}{{disposition c.token.data.disposition}}{{/if}} directory-item actor-elem grid grid-12col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
     {{!-- Token image --}}
