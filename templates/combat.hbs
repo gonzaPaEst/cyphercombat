@@ -7,7 +7,13 @@
       <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
       <div class="token-initiative">
         {{#if c.hasRolled}}
+        {{#if (eq c.actor.data.type "PC")}}
         <span class="initiative">{{roundUp c.initiative}}</span>
+        {{else if (or c.isGM c.isObserver)}}
+        <span class="initiative">{{#if (eq c.actor.data.type "Community")}}{{c.actor.data.data.rank}}{{else}}{{c.actor.data.data.level}}{{/if}} ({{roundUp c.initiative}})</span>
+        {{else}}
+        <span class="initiative">? (?)</span>
+        {{/if}}
         {{else if c.isOwner}}
         <a class="combatant-control roll {{#if c.hidden}}hidden{{/if}}" title="{{localize 'COMBAT.InitiativeRoll'}}" data-control="rollInitiative"></a>
         {{else}}
@@ -38,7 +44,7 @@
             <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
               <i class="fas fa-user-injured"></i>
             </a>
-            <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
               <i class="fas fa-skull"></i>
             </a>
             {{/if}}
