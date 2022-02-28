@@ -1,7 +1,7 @@
 import { toggleDefeatedStatus, toggleHidden } from "./actor-actions.mjs";
 
 export class CypherCombatSidebar {
-  // This must be called in the `init` hook in order for the other hooks to ire correctly.
+  // This must be called in the `init` hook in order for the other hooks to fire correctly.
   startup() {
 
     Hooks.on('ready', () => {
@@ -65,6 +65,12 @@ export class CypherCombatSidebar {
           }
           if ($input[0].id == "health") {
             updateData[$input.attr('name')] = Number(actor.data.data.health.value) + value;
+          }
+          if ($input[0].id == "infrastructure") {
+            updateData[$input.attr('name')] = Number(actor.data.data.infrastructure.value) + value;
+          }
+          if ($input[0].id == "quantity") {
+            updateData[$input.attr('name')] = Number(actor.data.data.quantity.value) + value;
           }
         }
         // Otherwise, set it absolutely.
@@ -149,9 +155,6 @@ export class CypherCombatSidebar {
             } else {
               combatant.actor.update({ "data.damage.damageTrack": 'Impaired' })
             }
-            if (combatant.isDefeated) {
-              toggleDefeatedStatus(combatant);
-            }
             break;
           case "markDebilitated":
             if (combatant.actor.data.data.damage.damageTrack == "Debilitated") {
@@ -161,15 +164,7 @@ export class CypherCombatSidebar {
             }
             break;
           case "markDead":
-            if (combatant.actor.type == 'PC') {
-              if (combatant.actor.data.data.damage.damageTrack == "Dead") {
-                combatant.actor.update({ "data.damage.damageTrack": 'Hale' })
-              } else {
-                combatant.actor.update({ "data.damage.damageTrack": 'Dead' })
-              }
-            } else if (combatant.actor.type != 'PC') {
-              toggleDefeatedStatus(combatant);
-            }
+            toggleDefeatedStatus(combatant);
             break;
           // Roll combatant initiative
           case "rollInitiative":
@@ -226,18 +221,15 @@ export class CypherCombatSidebar {
       return [];
     }
 
-    // Reduce the combatants array into a new object with keys based on the actor types.
-    let combatants = game.combat.data.combatants.filter((combatant) => {
-      // If this is for a combatant that has had its token/actor deleted, remove it from the combat.
+    let combatants = [];
+    // If this is for a combatant that has had its token/actor deleted, remove it from the combat.
+    // Else prepare data
+    for (let combatant of game.combat.combatants) {
       if (!combatant.actor) {
         game.combat.deleteEmbeddedDocuments('Combatant', [combatant.id]);
-      }
-      // Append valid actors to the appropriate group.
-      else {
-        // Initialize the group if it doesn't exist.
-        let type = combatant.actor.data.type;
-
+      } else {
         // Establish PC's damage track
+        let type = combatant.actor.data.type;
         if (type == 'PC') {
           let damageTrack = combatant.actor.data.data.damage.damageTrack;
           combatant.dead = damageTrack == 'Dead';
@@ -245,21 +237,23 @@ export class CypherCombatSidebar {
           combatant.impaired = damageTrack == 'Impaired';
           combatant.hale = damageTrack == 'Hale';
         }
-
         // Determine if combatant has rolled for initiative
         combatant.hasRolled = combatant.initiative !== null;
-
         // Set a property for whether or not this is editable. This controls whether editabel fields like HP will be shown as an input or a div in the combat tracker HTML template.
         combatant.isGM = game.user.isGM;
         combatant.isObserver = (combatant.actor.permission == 2) ? true : false;
-
-        return true;
       }
-    });
+      // Append actors
+      combatants.push(combatant)
+    }
 
-    // Sort the combatants by initiative.
+    // Sort the combatants by initiative
     combatants.sort((a, b) => {
-      return Number(b.initiative) - Number(a.initiative)
+      const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
+      const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
+      const ci = ib - ia;
+      if (ci !== 0) return ci;
+      return a.id > b.id ? 1 : -1;
     });
 
     // Return the list of combatants.
