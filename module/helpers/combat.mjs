@@ -245,7 +245,7 @@ export class CypherCombatSidebar {
         combatant.isObserver = (combatant.actor.permission == 2) ? true : false;
 
         // Determine if combatant is active
-        combatant.active = (combatant.data.actorId == game.combat.combatant.data.actorId) ? true : false;
+        combatant.active = (combatant.data.tokenId == game.combat.combatant.data.tokenId) ? true : false;
       }
       // Append actors
       combatants.push(combatant)
