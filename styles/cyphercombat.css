@@ -200,27 +200,27 @@
 }
 
 #combat-tracker .PC {
-  background: rgb(0, 0, 85, 0.2);
-  border-top: 2px solid rgb(0, 0, 85, 1);
-  border-bottom: 2px solid rgb(0, 0, 85, 1);
+  background: rgb(52, 188, 78, 0.2);
+  border-top: 2px solid rgb(52, 188, 78, 1);
+  border-bottom: 2px solid rgb(52, 188, 78, 1);
 }
 
 #combat-tracker .hostile {
-  background: rgb(85, 0, 0, 0.2);
-  border-top: 2px solid rgb(85, 0, 0, 1);
-  border-bottom: 2px solid rgb(85, 0, 0, 1);
+  background: rgb(231, 33, 36, 0.2);
+  border-top: 2px solid rgb(231, 33, 36, 1);
+  border-bottom: 2px solid rgb(231, 33, 36, 1);
 }
 
 #combat-tracker .neutral {
-  background: rgb(0, 0, 0, 0.15);
-  border-top: 2px solid rgb(0, 0, 0, 1);
-  border-bottom: 2px solid rgb(0, 0, 0, 1);
+  background: rgb(241, 216, 53, 0.15);
+  border-top: 2px solid rgb(241, 216, 53, 1);
+  border-bottom: 2px solid rgb(241, 216, 53, 1);
 }
 
 #combat-tracker .friendly {
-  background: rgb(0, 85, 0, 0.2);
-  border-top: 2px solid rgb(0, 85, 0, 1);
-  border-bottom: 2px solid rgb(0, 85, 0, 1);
+  background: rgb(67, 223, 223, 0.2);
+  border-top: 2px solid rgb(67, 223, 223, 1);
+  border-bottom: 2px solid rgb(67, 223, 223, 1);
 }
 
 #combat-tracker span.initiative {
