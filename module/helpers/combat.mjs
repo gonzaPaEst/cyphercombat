@@ -239,9 +239,13 @@ export class CypherCombatSidebar {
         }
         // Determine if combatant has rolled for initiative
         combatant.hasRolled = combatant.initiative !== null;
+
         // Set a property for whether or not this is editable. This controls whether editabel fields like HP will be shown as an input or a div in the combat tracker HTML template.
         combatant.isGM = game.user.isGM;
         combatant.isObserver = (combatant.actor.permission == 2) ? true : false;
+
+        // Determine if combatant is active
+        combatant.active = (combatant.data.actorId == game.combat.combatant.data.actorId) ? true : false;
       }
       // Append actors
       combatants.push(combatant)
