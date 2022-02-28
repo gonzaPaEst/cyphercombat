@@ -10,7 +10,7 @@ export class CypherCombatSidebar {
       $('body').on('change', '.combat-input', (event) => {
         event.preventDefault();
 
-        // Get the incput and actor element.
+        // Get the input and actor element.
         const dataset = event.currentTarget.dataset;
         let $input = $(event.currentTarget);
         let $actorRow = $input.parents('.directory-item.actor-elem');
@@ -93,8 +93,13 @@ export class CypherCombatSidebar {
 
       const findToken = (event) => {
         const combatant = event.currentTarget;
-        const c = combatant.dataset.actorId;
-        token = canvas.tokens.placeables.find(t => t.data.actorId == c);
+        const c = combatant.dataset.combatantId;
+        for (let t of canvas.tokens.placeables) {
+          if (t.combatant) {
+            if (t.combatant.data._id == c) { token = t };
+          }
+        }
+
         return token;
       };
 
