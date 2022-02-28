@@ -92,6 +92,10 @@
   grid-template-rows: repeat(2, minmax(0, 1fr));
 }
 
+#combat li.combatant.active {
+  border-color: var(--color-border-highlight);
+}
+
 #combat li.combatant .token-image {
   height: auto;
   width: auto;
@@ -200,27 +204,27 @@
 }
 
 #combat-tracker .PC {
-  background: rgb(52, 188, 78, 0.2);
-  border-top: 2px solid rgb(52, 188, 78, 1);
-  border-bottom: 2px solid rgb(52, 188, 78, 1);
+  background: rgb(52, 188, 78, 0.1);
+  border-top: 2px solid rgb(52, 188, 78, 0.3);
+  border-bottom: 2px solid rgb(52, 188, 78, 0.3);
 }
 
 #combat-tracker .hostile {
-  background: rgb(231, 33, 36, 0.2);
-  border-top: 2px solid rgb(231, 33, 36, 1);
-  border-bottom: 2px solid rgb(231, 33, 36, 1);
+  background: rgb(231, 33, 36, 0.1);
+  border-top: 2px solid rgb(231, 33, 36, 0.3);
+  border-bottom: 2px solid rgb(231, 33, 36, 0.3);
 }
 
 #combat-tracker .neutral {
-  background: rgb(241, 216, 53, 0.15);
-  border-top: 2px solid rgb(241, 216, 53, 1);
-  border-bottom: 2px solid rgb(241, 216, 53, 1);
+  background: rgb(241, 216, 53, 0.1);
+  border-top: 2px solid rgb(241, 216, 53, 0.3);
+  border-bottom: 2px solid rgb(241, 216, 53, 0.3);
 }
 
 #combat-tracker .friendly {
-  background: rgb(67, 223, 223, 0.2);
-  border-top: 2px solid rgb(67, 223, 223, 1);
-  border-bottom: 2px solid rgb(67, 223, 223, 1);
+  background: rgb(67, 223, 223, 0.1);
+  border-top: 2px solid rgb(67, 223, 223, 0.3);
+  border-bottom: 2px solid rgb(67, 223, 223, 0.3);
 }
 
 #combat-tracker span.initiative {
