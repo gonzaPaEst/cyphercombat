@@ -1,7 +1,5 @@
-import { toggleDefeatedStatus, toggleHidden } from "./actor-actions.mjs";
-
 export class CypherCombatSidebar {
-  // This must be called in the `init` hook in order for the other hooks to fire correctly.
+  // This must be called in the `init` hook in order for the other hooks to ire correctly.
   startup() {
 
     Hooks.on('ready', () => {
@@ -10,7 +8,7 @@ export class CypherCombatSidebar {
       $('body').on('change', '.combat-input', (event) => {
         event.preventDefault();
 
-        // Get the input and actor element.
+        // Get the incput and actor element.
         const dataset = event.currentTarget.dataset;
         let $input = $(event.currentTarget);
         let $actorRow = $input.parents('.directory-item.actor-elem');
@@ -66,12 +64,6 @@ export class CypherCombatSidebar {
           if ($input[0].id == "health") {
             updateData[$input.attr('name')] = Number(actor.data.data.health.value) + value;
           }
-          if ($input[0].id == "infrastructure") {
-            updateData[$input.attr('name')] = Number(actor.data.data.infrastructure.value) + value;
-          }
-          if ($input[0].id == "quantity") {
-            updateData[$input.attr('name')] = Number(actor.data.data.quantity.value) + value;
-          }
         }
         // Otherwise, set it absolutely.
         else {
@@ -93,21 +85,16 @@ export class CypherCombatSidebar {
 
       const findToken = (event) => {
         const combatant = event.currentTarget;
-        const c = combatant.dataset.combatantId;
-        for (let t of canvas.tokens.placeables) {
-          if (t.combatant) {
-            if (t.combatant.data._id == c) { token = t };
-          }
-        }
-
+        const c = combatant.dataset.actorId;
+        token = canvas.tokens.placeables.find(t => t.data.actorId == c);
         return token;
       };
 
       $('body').on('mouseenter', '.combatant', (event) => {
         findToken(event);
         if (token.isOwner || game.user.isGM) {
-          if (token?.isVisible) {
-            if (!token._controlled) token._onHoverIn();
+          if ( token?.isVisible ) {
+            if ( !token._controlled ) token._onHoverIn();
           }
         }
       });
@@ -142,38 +129,66 @@ export class CypherCombatSidebar {
         }
       });
 
-      $('body').on('click', '.combatant-control', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        const btn = event.currentTarget;
-        const li = btn.closest(".combatant");
-        const combatant = game.combat.combatants.get(li.dataset.combatantId);
+      $('body').on('click', '.combatant-control', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const btn = e.currentTarget;
+        const combatant = btn.closest(".combatant");
+        const c = combatant.dataset.combatantId;
+        const actor = combatant.dataset.actorId;
+        const combatantActor = game.combat.data.combatants.find(combat => combat.data._id == c);
+        let damageTrack = combatantActor.actor.data.data.damage.damageTrack;
+        const combatantType = combatantActor.actor.data.type;
+        token = canvas.tokens.placeables.find(t => t.data.actorId == actor);
+        let dead = "icons/svg/skull.svg";
+        let effects = token.data.effects;
 
         switch (btn.dataset.control) {
           // Toggle combatant visibility
           case "toggleHidden":
-            toggleHidden(combatant)
+            let hide = !token.data.hidden || false;
+            token.document.update({hidden: hide})
+              .then(() => {
+                combatantActor.actor.update({hidden: hide});
+              })
+            break;
+          // Mark damage track in PC sheet
+          case "markHale":
+              combatantActor.actor.update({ "data.damage.damageTrack": 'Hale' });
+              if (effects.includes(dead)) {
+                // console.log(effect)
+                token.toggleEffect(dead, {overlay:false});  
+              }
             break;
           case "markImpaired":
-            if (combatant.actor.data.data.damage.damageTrack == "Impaired") {
-              combatant.actor.update({ "data.damage.damageTrack": 'Hale' })
-            } else {
-              combatant.actor.update({ "data.damage.damageTrack": 'Impaired' })
-            }
+              combatantActor.actor.update({ "data.damage.damageTrack": 'Impaired' });
+              if (effects.includes(dead)) {
+                // console.log(effect)
+                token.toggleEffect(dead, {overlay:false});  
+              }
             break;
           case "markDebilitated":
-            if (combatant.actor.data.data.damage.damageTrack == "Debilitated") {
-              combatant.actor.update({ "data.damage.damageTrack": 'Hale' })
-            } else {
-              combatant.actor.update({ "data.damage.damageTrack": 'Debilitated' })
-            }
+              combatantActor.actor.update({ "data.damage.damageTrack": 'Debilitated' });
+              if (effects.includes(dead)) {
+                // console.log(effect)
+                token.toggleEffect(dead, {overlay:false});  
+              }
             break;
           case "markDead":
-            toggleDefeatedStatus(combatant);
-            break;
+            if (combatantType == 'PC') {
+              combatantActor.actor.update({ "data.damage.damageTrack": 'Dead' })
+                  if (!effects.includes(dead)) {
+                    // console.log(damageTrack, effects)
+                    token.toggleEffect(dead, {overlay:false});  
+                  } 
+            } else {
+                token.toggleEffect(dead, {overlay:false});  
+            }
+            break;  
           // Roll combatant initiative
           case "rollInitiative":
-            return game.combat.rollInitiative([combatant.id]);
+            game.combat.rollInitiative([c]);
+            break;
         }
       })
     });
@@ -184,7 +199,7 @@ export class CypherCombatSidebar {
     });
 
     Hooks.on('updateToken', (scene, token, data, options, id) => {
-      if (data) {
+      if (data.actorData) {
         ui.combat.render();
       }
     });
@@ -213,6 +228,7 @@ export class CypherCombatSidebar {
         let content = await renderTemplate(template, templateData)
         newHtml.find('#combat-tracker').remove();
         newHtml.find('#combat-round').after(content);
+
       }
     });
   }
@@ -220,52 +236,85 @@ export class CypherCombatSidebar {
   /*
     Retrieve a list of combatants for the current combat. Combatants will be sorted into groups by actor type.
    */
-  getCombatantsData() {
-    // If there isn't a combat, exit and return an empty array.
-    if (!game.combat || !game.combat.data) {
-      return [];
-    }
-
-    let combatants = [];
-    // If this is for a combatant that has had its token/actor deleted, remove it from the combat.
-    // Else prepare data
-    for (let combatant of game.combat.combatants) {
-      if (!combatant.actor) {
-        game.combat.deleteEmbeddedDocuments('Combatant', [combatant.id]);
-      } else {
-        // Establish PC's damage track
-        let type = combatant.actor.data.type;
-        if (type == 'PC') {
-          let damageTrack = combatant.actor.data.data.damage.damageTrack;
-          combatant.dead = damageTrack == 'Dead';
-          combatant.debilitated = damageTrack == 'Debilitated';
-          combatant.impaired = damageTrack == 'Impaired';
-          combatant.hale = damageTrack == 'Hale';
-        }
-        // Determine if combatant has rolled for initiative
-        combatant.hasRolled = combatant.initiative !== null;
-
-        // Set a property for whether or not this is editable. This controls whether editabel fields like HP will be shown as an input or a div in the combat tracker HTML template.
-        combatant.isGM = game.user.isGM;
-        combatant.isObserver = (combatant.actor.permission == 2) ? true : false;
-
-        // Determine if combatant is active
-        combatant.active = (combatant.data.tokenId == game.combat.combatant.data.tokenId && game.combat.started) ? true : false;
+    getCombatantsData() {
+      // If there isn't a combat, exit and return an empty array.
+      if (!game.combat || !game.combat.data) {
+        return [];
       }
-      // Append actors
-      combatants.push(combatant)
+      
+      // Reduce the combatants array into a new object with keys based on the actor types.
+      let combatants = game.combat.data.combatants.filter((combatant) => {
+        // If this is for a combatant that has had its token/actor deleted, remove it from the combat.
+        if (!combatant.actor) {
+          game.combat.deleteEmbeddedDocuments('Combatant', [combatant.id]);
+        }
+        // Append valid actors to the appropriate group.
+        else {
+          // Initialize the group if it doesn't exist.
+          let type = combatant.actor.data.type;
+  
+          // Retrieve the health bars mode from the token's resource settings.
+          let displayBarsMode = Object.entries(CONST.TOKEN_DISPLAY_MODES).find(i => i[1] == combatant.token.data.displayBars)[0];
+          // Assume player characters should always show their health bar.
+          let displayStat = type == 'PC' ? true : false;
+  
+          // If this is a group other than character (such as NPC), we need to evaluate whether or not this player can see its health bar.
+          if (type != 'PC') {
+            // If the mode is one of the owner options, only the token owner or the GM should be able to see it.
+            if (displayBarsMode.includes("OWNER")) {
+              if (combatant.isOwner || game.user.isGM) {
+                displayStat = true;
+              }
+            }
+            // For other modes, always show it.
+            else if (displayBarsMode != "NONE") {
+              displayStat = true;
+            }
+            // If it's set to the none mode, hide it from players, but allow the GM to see it.
+            else {
+              displayStat = game.user.isGM ? true : false;
+            }
+  
+          }
+
+          // Establish PC's damage track
+          if (type == 'PC') {
+            let damageTrack = combatant.actor.data.data.damage.damageTrack;
+
+            combatant.dead = damageTrack == 'Dead';
+
+            combatant.debilitated = damageTrack == 'Debilitated';
+
+            combatant.impaired = damageTrack == 'Impaired';
+
+            combatant.hale = damageTrack == 'Hale';
+          }
+
+          if (type != 'PC') {
+            let dead = "icons/svg/skull.svg";
+            combatant.dead = combatant.token.data.effects.includes(dead);
+          }
+
+          // Determine if token is hidden
+          combatant.hid = combatant.token.data.hidden === true;
+
+          // Determine if combatant has rolled for initiative
+          combatant.hasRolled = combatant.initiative !== null;
+          // Set a property based on the health mode earlier.
+          combatant.displayStat = displayStat;
+          // Set a property for whether or not this is editable. This controls whether editabel fields like HP will be shown as an input or a div in the combat tracker HTML template.
+          combatant.editable = combatant.isOwner || game.user.isGM;
+  
+          return true;
+        }
+      });
+
+      // Sort the combatants by initiative.
+        combatants.sort((a, b) => {
+          return Number(b.initiative) - Number(a.initiative)
+        });   
+  
+      // Return the list of combatants.
+      return combatants;
     }
-
-    // Sort the combatants by initiative
-    combatants.sort((a, b) => {
-      const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
-      const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
-      const ci = ib - ia;
-      if (ci !== 0) return ci;
-      return a.id > b.id ? 1 : -1;
-    });
-
-    // Return the list of combatants.
-    return combatants;
-  }
 }

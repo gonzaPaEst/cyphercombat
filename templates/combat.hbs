@@ -1,244 +1,100 @@
 <ol id="combat-tracker" class="directory-list combatants">
   {{#each combatants as |c|}}
-  {{#if (or c.isOwner (eq c.hidden false))}}
-  <li class="combatant {{#if c.hidden}}hidden{{/if}} {{#if (eq c.actor.data.type "PC")}}PC{{else}}{{disposition c.token.data.disposition}}{{/if}} directory-item actor-elem grid grid-12col {{#if c.active}}active{{/if}}" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
-    {{!-- Token image --}}
-    <div class="grid-span-2 img-div">
-      <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
-      <div class="token-initiative">
-        {{#if c.hasRolled}}
-        {{#if (eq c.actor.data.type "PC")}}
-        <span class="initiative">{{roundUp c.initiative}}</span>
-        {{else if (or c.isGM c.isObserver)}}
-        <span class="initiative">{{#if (eq c.actor.data.type "Community")}}{{c.actor.data.data.rank}}{{else}}{{c.actor.data.data.level}}{{/if}} ({{roundUp c.initiative}})</span>
-        {{else}}
-        <span class="initiative">? (?)</span>
-        {{/if}}
-        {{else if c.isOwner}}
-        <a class="combatant-control roll {{#if c.hidden}}hidden{{/if}}" title="{{localize 'COMBAT.InitiativeRoll'}}" data-control="rollInitiative"></a>
-        {{else}}
-        <span class="initiative">?</span>
-        {{/if}}
-      </div>
-    </div>
-    <div class="grid-span-10">
-      <table class="combat-table">
-        <tr>
-          <td class="combatant-name" colspan="100">
-            <p class="{{#if (or c.isDefeated c.dead)}}defeated{{/if}}">{{c.name}}</p>
-          </td>
-        </tr>
-        <tr class="combatant-controls">
-          {{!-- PCs --}}
-          {{#if (eq c.actor.data.type "PC")}}
-          <td class="combatant-buttons pc">
-            {{#if c.isGM}}
-            <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-              <i class="fas fa-eye-slash"></i>
-            </a>
+        <li class="combatant {{c.actor.data.type}} directory-item actor-elem grid grid-12col" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
+          {{!-- Token image --}}
+          <div class="grid-span-2 img-div">
+              <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
+              <div class="token-initiative">
+                {{#if c.hasRolled}}
+                <span class="initiative">{{c.initiative}}</span>
+                {{else if c.editable}}
+                <a class="combatant-control roll" title="{{localize 'COMBAT.InitiativeRoll'}}" data-control="rollInitiative"></a>
+                {{/if}}
+              </div>
+          </div>
+          {{!-- Name. --}}
+          <div class="token-name grid-span-4">
+              <h4>{{c.name}}</h4>
+              <div class="combatant-controls flexrow">
+                    {{#if c.editable}}
+                      <a class="combatant-control {{#if c.hid}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+                          <i class="fas fa-eye-slash"></i>
+                      </a>
+                      {{#ifCond c.actor.data.type '==' "PC"}}
+                      <a class="combatant-control {{#if c.hale}}active{{/if}}" title="Hale" data-control="markHale">
+                        <i class="fas fa-check-circle"></i>
+                      </a>
+                      <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="Impaired" data-control="markImpaired">
+                          <i class="fas fa-tired"></i>
+                      </a>                      
+                      <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
+                          <i class="fas fa-user-injured"></i>
+                      </a>
+                      {{/ifCond}}
+                      <a class="combatant-control {{#if c.dead}}active{{/if}}" title="Dead" data-control="markDead">
+                          <i class="fas fa-skull"></i>
+                      </a>
+                    {{/if}}
+                </div>
+          </div>
+          {{!-- Health, editable by owner or GM --}}
+          {{#ifCond c.actor.data.type '==' "PC"}}
+          <div class="grid-span-2 combat-input">
+            <label for="might">Might</label>
+            {{#if c.displayStat}}
+              {{#if c.editable}}
+                <input id="might" class="combat-input" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
+              {{else}}
+                <p>{{c.actor.data.data.pools.might.value}}</p>
+              {{/if}}
+            {{else}}???{{/if}}
+          </div>
+          <div class="grid-span-2 combat-input">
+            <label for="speed">Speed</label>
+            {{#if c.displayStat}}
+              {{#if c.editable}}            
+              <input id="speed" class="combat-input" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
+              {{else}}
+                <p>{{c.actor.data.data.pools.speed.value}}</p>
+              {{/if}}
+            {{else}}???{{/if}}
+          </div>
+          <div class="grid-span-2 combat-input">           
+            <label for="intellect">Intellect</label>
+            {{#if c.displayStat}}
+            {{#if c.editable}}
+            <input id="intellect" class="combat-input" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
+            {{else}}
+                <p>{{c.actor.data.data.pools.intellect.value}}</p>
             {{/if}}
-            {{#if c.isOwner}}
-            <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="Impaired" data-control="markImpaired">
-              <i class="fas fa-heartbeat"></i>
-            </a>
-            <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
-              <i class="fas fa-user-injured"></i>
-            </a>
-            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-              <i class="fas fa-skull"></i>
-            </a>
-            {{/if}}
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Might</p>
-              {{#if c.isOwner}}
-              <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.pools.might.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Speed</p>
-              {{#if c.isOwner}}
-              <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.pools.speed.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Intellect</p>
-              {{#if c.isOwner}}
-              <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.pools.intellect.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          {{/if}}
-          {{!-- NPCs & Companions --}}
-          {{#if (or (eq c.actor.data.type "NPC") (eq c.actor.data.type "Companion"))}}
-          <td class="combatant-buttons">
-            {{#if c.isGM}}
-            <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-              <i class="fas fa-eye-slash"></i>
-            </a>
-            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-              <i class="fas fa-skull"></i>
-            </a>
-            {{/if}}
-          </td>
-          <td class="combatant-values">
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Health</p>
-              {{#if c.isOwner}}
-              <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.health.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Damage</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.damage}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Armor</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.armor}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          {{/if}}
-          {{!-- Communitees --}}
-          {{#if (eq c.actor.data.type "Community")}}
-          <td class="combatant-buttons">
-            {{#if c.isGM}}
-            <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-              <i class="fas fa-eye-slash"></i>
-            </a>
-            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-              <i class="fas fa-skull"></i>
-            </a>
-            {{/if}}
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Health</p>
-              {{#if c.isOwner}}
-              <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.health.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Infrastructure</p>
-              {{#if c.isOwner}}
-              <input id="infrastructure" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.infrastructure.value" value="{{c.actor.data.data.infrastructure.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.infrastructure.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Damage</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.damage}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Armor</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.armor}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          {{/if}}
-          {{!-- Vehicles --}}
-          {{#if (eq c.actor.data.type "Vehicle")}}
-          <td class="combatant-buttons">
-            {{#if c.isGM}}
-            <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-              <i class="fas fa-eye-slash"></i>
-            </a>
-            <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-              <i class="fas fa-skull"></i>
-            </a>
-            {{/if}}
-          </td>
-          <td class="combatant-values">
-          </td>
-          <td class="combatant-values">
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Crew</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.crew}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Weapons</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.weaponSystems}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          {{/if}}
-          {{!-- Marker --}}
-          {{#if (eq c.actor.data.type "Token")}}
-          <td class="combatant-buttons">
-            {{#if c.isGM}}
-            <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-              <i class="fas fa-eye-slash"></i>
-            </a>
-            {{/if}}
-          </td>
-          <td class="combatant-values">
-          </td>
-          <td class="combatant-values">
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Quantity</p>
-              {{#if c.isOwner}}
-              <input id="quantity" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
-              {{else if c.isObserver}}
-              <p>{{c.actor.data.data.quantity.value}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          <td class="combatant-values">
-            <div class="combat-input">
-              <p class="truncate">Max</p>
-              {{#if (or c.isOwner c.isObserver)}}
-              <p>{{c.actor.data.data.quantity.max}}</p>
-              {{else}}<p>?</p>{{/if}}
-            </div>
-          </td>
-          {{/if}}
-        </tr>
-      </table>
-    </div>
-  </li>
-  {{/if}}
+            {{else}}???{{/if}}
+          </div>
+          {{/ifCond}}
+          {{!-- Render Armor and Damage for NPCs --}}
+          {{#ifCond c.actor.data.type '!=' "PC"}}
+          <div class="grid-span-2 combat-input">
+            {{#if c.displayStat}}
+              {{#if c.editable}}
+                <label for="health">Health</label>
+                <input id="health" class="combat-input" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
+              {{else}}
+                <p>{{c.actor.data.data.health.value}}</p>
+              {{/if}}
+            {{else}}???{{/if}}
+          </div>          
+          <div class="grid-span-2 combat-input">
+            <label for="armor">Armor</label>
+            {{#if c.editable}}
+            <p>{{c.actor.data.data.armor}}</p>
+            {{else}}???{{/if}}
+          </div>
+          <div class="grid-span-2 combat-input">
+            <label for="damage">Damage</label>
+            {{#if c.editable}}            
+            <p>{{c.actor.data.data.damage}}</p>
+            {{else}}???{{/if}}
+          </div>
+          {{/ifCond}}
+        </li>
   {{/each}}
 </ol>
