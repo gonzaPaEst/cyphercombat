@@ -86,10 +86,18 @@
   grid-column-end: span 12;
 }
 
-.grid-2row {
+.grid-3row {
   display: grid;
-  grid-row: span 2 / span 2;
-  grid-template-rows: repeat(2, minmax(0, 1fr));
+  grid-row: span 3 / span 3;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+}
+
+.grid-span-2row {
+  grid-row-end: span 2;
+}
+
+.grid-span-3row {
+  grid-row-end: span 3;
 }
 
 #combat li.combatant.active {
@@ -267,4 +275,9 @@
 
 #combat-tracker table tr:nth-child(even) {
   background: none;
+}
+
+#combat-tracker table thead {
+  background: none;
+  border-bottom: none;
 }
