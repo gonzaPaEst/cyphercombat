@@ -21,13 +21,6 @@
   "styles": [
     "/styles/cyphercombat.css"
   ],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
-  ],
   "url": "https://github.com/gonzaPaEst/cyphercombat",
   "manifest": "https://raw.githubusercontent.com/gonzaPaEst/cyphercombat/main/module.json",
   "download": "https://github.com/gonzaPaEst/cyphercombat/releases/latest/download/cyphercombat-main.zip"

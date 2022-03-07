@@ -17,7 +17,3 @@ Hooks.on('init', () => {
     });
 
 });
-
-Hooks.once('ready', async function () {
-
-});

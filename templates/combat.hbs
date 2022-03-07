@@ -54,7 +54,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Might</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Might'}}">{{localize 'CYPHERSYSTEM.Might'}}</p>
                 {{#if c.isOwner}}
                 <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -64,7 +64,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Speed</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Speed'}}">{{localize 'CYPHERSYSTEM.Speed'}}</p>
                 {{#if c.isOwner}}
                 <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -74,7 +74,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Intellect</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Intellect'}}">{{localize 'CYPHERSYSTEM.Intellect'}}</p>
                 {{#if c.isOwner}}
                 <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -99,7 +99,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Health</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
                 {{#if c.isOwner}}
                 <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -109,7 +109,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Damage</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.damage}}</p>
                 {{else}}<p>?</p>{{/if}}
@@ -117,7 +117,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Armor</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.armor}}</p>
                 {{else}}<p>?</p>{{/if}}
@@ -138,7 +138,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Health</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
                 {{#if c.isOwner}}
                 <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -148,7 +148,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Infrastructure</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Infrastructure'}}">{{localize 'CYPHERSYSTEM.Infrastructure'}}</p>
                 {{#if c.isOwner}}
                 <input id="infrastructure" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.infrastructure.value" value="{{c.actor.data.data.infrastructure.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
@@ -158,7 +158,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Damage</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.damage}}</p>
                 {{else}}<p>?</p>{{/if}}
@@ -166,7 +166,7 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Armor</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.armor}}</p>
                 {{else}}<p>?</p>{{/if}}
@@ -185,21 +185,17 @@
               </a>
               {{/if}}
             </td>
-            <td class="combatant-values">
-            </td>
-            <td class="combatant-values">
-            </td>
-            <td class="combatant-values">
+            <td class="combatant-values" colspan="2">
               <div class="combat-input">
-                <p class="truncate">Crew</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Crew'}}">{{localize 'CYPHERSYSTEM.Crew'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.crew}}</p>
                 {{else}}<p>?</p>{{/if}}
               </div>
             </td>
-            <td class="combatant-values">
+            <td class="combatant-values" colspan="2">
               <div class="combat-input">
-                <p class="truncate">Weapons</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.WeaponSystems'}}">{{localize 'CYPHERSYSTEM.WeaponSystems'}}</p>
                 {{#if (or c.isOwner c.isObserver)}}
                 <p>{{c.actor.data.data.weaponSystems}}</p>
                 {{else}}<p>?</p>{{/if}}
@@ -221,19 +217,11 @@
             </td>
             <td class="combatant-values">
               <div class="combat-input">
-                <p class="truncate">Quantity</p>
+                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Quantity'}}">{{localize 'CYPHERSYSTEM.Quantity'}}</p>
                 {{#if c.isOwner}}
                 <input id="quantity" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
                 {{else if c.isObserver}}
                 <p>{{c.actor.data.data.quantity.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate">Max</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.quantity.max}}</p>
                 {{else}}<p>?</p>{{/if}}
               </div>
             </td>
