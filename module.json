@@ -17,7 +17,6 @@
     "/module/cyphercombat.mjs"
   ],
   "scripts": [],
-  "socket": true,
   "styles": [
     "/styles/cyphercombat.css"
   ],
