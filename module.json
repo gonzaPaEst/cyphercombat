@@ -3,7 +3,7 @@
   "title": "Cypher System Combat Tracker",
   "description": "Replaces the default Foundry combat tracker with one made specifically for the Cypher System",
   "author": "gonzaPaEst",
-  "version": "0.1",
+  "version": "1",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "system": "cyphersystem",
