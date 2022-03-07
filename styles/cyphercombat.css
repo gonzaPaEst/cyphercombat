@@ -117,7 +117,7 @@
   padding: 1px;
 }
 
-#combat-tracker .friendly {
+#combat-tracker .PC {
   background: rgb(52, 188, 78, 0.1);
   border-top: 2px solid rgb(52, 188, 78, 0.3);
   border-bottom: 2px solid rgb(52, 188, 78, 0.3);
@@ -135,7 +135,7 @@
   border-bottom: 2px solid rgb(241, 216, 53, 0.3);
 }
 
-#combat-tracker .PC {
+#combat-tracker .friendly {
   background: rgb(67, 223, 223, 0.1);
   border-top: 2px solid rgb(67, 223, 223, 0.3);
   border-bottom: 2px solid rgb(67, 223, 223, 0.3);
