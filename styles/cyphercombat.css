@@ -187,3 +187,7 @@
   background: none;
   border-bottom: none;
 }
+
+#combat-config div.form-group:first-of-type {
+  display: none;
+}
