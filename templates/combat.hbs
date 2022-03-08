@@ -179,9 +179,9 @@
           {{else}}<p>?</p>{{/if}}
         </div>
       </div>
-      <div class="combatant-values grid-span-4">
-        <div class="combat-input weapons">
-          <p class="truncate" title="{{localize 'CYPHERSYSTEM.WeaponSystems'}}">{{localize 'CYPHERSYSTEM.WeaponSystems'}}</p>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="Weapons">Weapons</p>
           {{#if (or c.isOwner c.isObserver)}}
           <p>{{c.actor.data.data.weaponSystems}}</p>
           {{else}}<p>?</p>{{/if}}
@@ -197,17 +197,24 @@
         </a>
         {{/if}}
       </div>
-      <div class="combatant-values grid-start-5 grid-span-4 markers">
+      <div class="combatant-values grid-start-5 grid-span-2">
         <div class="combat-input">
           <p class="truncate" title="{{localize 'CYPHERSYSTEM.Quantity'}}">{{localize 'CYPHERSYSTEM.Quantity'}}</p>
           {{#if c.isOwner}}
-          <div class="quantity">
-            <input id="quantity-value" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number"> / <input id="quantity-max" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.max" value="{{c.actor.data.data.quantity.max}}" data-dtype="Number">
-          </div>
+          {{!-- <div class="quantity"> --}}
+            <input id="quantity-value" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
+          {{!-- </div> --}}
           {{else if c.isObserver}}
-          <p>{{c.actor.data.data.quantity.value}} / {{c.actor.data.data.quantity.value}}</p>
+          <p>{{c.actor.data.data.quantity.value}}</p>
           {{else}}<p>?</p>{{/if}}
         </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="Max">Max</p>
+        {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.quantity.max}}</p>
+        {{else}}<p>?</p>{{/if}}
       </div>
       {{/if}}
     </section>
