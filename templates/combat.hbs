@@ -1,9 +1,9 @@
 <ol id="combat-tracker" class="directory-list combatants">
   {{#each combatants as |c|}}
   {{#if (or c.isOwner (eq c.hidden false))}}
-  <li class="combatant {{#if c.hidden}}hidden{{/if}} {{#if (eq c.actor.data.type "PC")}}PC{{else}}{{disposition c.token.data.disposition}}{{/if}} directory-item actor-elem grid grid-12col {{#if c.active}}active{{/if}}" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
+  <li class="combatant {{#if c.hidden}}hidden{{/if}} {{#if (eq c.actor.data.type "PC")}}PC{{else}}{{disposition c.token.data.disposition}}{{/if}} directory-item actor-elem {{#if c.active}}active{{/if}}" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
     {{!-- Token image --}}
-    <div class="grid-span-2 img-div">
+    <section class="img">
       <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
       <div class="token-initiative">
         {{#if c.hasRolled}}
@@ -20,216 +20,197 @@
         <span class="initiative">?</span>
         {{/if}}
       </div>
+    </section>
+    <div class="combatant-name">
+      <h4 class="{{#if (or c.isDefeated c.dead)}}defeated{{/if}}">{{c.name}}</h4>
     </div>
-    <div class="grid-span-10">
-      <table class="combat-table">
-        <thead>
-          <tr>
-            <th class="combatant-name" colspan="100">
-              <p class="{{#if (or c.isDefeated c.dead)}}defeated{{/if}}">{{c.name}}</p>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="combatant-controls">
-            {{!-- PCs --}}
-            {{#if (eq c.actor.data.type "PC")}}
-            <td class="combatant-buttons pc">
-              {{#if c.isGM}}
-              <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i>
-              </a>
-              {{/if}}
-              {{#if c.isOwner}}
-              <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="Impaired" data-control="markImpaired">
-                <i class="fas fa-heartbeat"></i>
-              </a>
-              <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="Debilitated" data-control="markDebilitated">
-                <i class="fas fa-user-injured"></i>
-              </a>
-              <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-                <i class="fas fa-skull"></i>
-              </a>
-              {{/if}}
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Might'}}">{{localize 'CYPHERSYSTEM.Might'}}</p>
-                {{#if c.isOwner}}
-                <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.pools.might.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Speed'}}">{{localize 'CYPHERSYSTEM.Speed'}}</p>
-                {{#if c.isOwner}}
-                <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.pools.speed.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Intellect'}}">{{localize 'CYPHERSYSTEM.Intellect'}}</p>
-                {{#if c.isOwner}}
-                <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.pools.intellect.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            {{/if}}
-            {{!-- NPCs & Companions --}}
-            {{#if (or (eq c.actor.data.type "NPC") (eq c.actor.data.type "Companion"))}}
-            <td class="combatant-buttons">
-              {{#if c.isGM}}
-              <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i>
-              </a>
-              <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-                <i class="fas fa-skull"></i>
-              </a>
-              {{/if}}
-            </td>
-            <td class="combatant-values">
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
-                {{#if c.isOwner}}
-                <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.health.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.damage}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.armor}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            {{/if}}
-            {{!-- Communitees --}}
-            {{#if (eq c.actor.data.type "Community")}}
-            <td class="combatant-buttons">
-              {{#if c.isGM}}
-              <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i>
-              </a>
-              <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-                <i class="fas fa-skull"></i>
-              </a>
-              {{/if}}
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
-                {{#if c.isOwner}}
-                <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.health.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Infrastructure'}}">{{localize 'CYPHERSYSTEM.Infrastructure'}}</p>
-                {{#if c.isOwner}}
-                <input id="infrastructure" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.infrastructure.value" value="{{c.actor.data.data.infrastructure.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.infrastructure.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.damage}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.armor}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            {{/if}}
-            {{!-- Vehicles --}}
-            {{#if (eq c.actor.data.type "Vehicle")}}
-            <td class="combatant-buttons">
-              {{#if c.isGM}}
-              <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i>
-              </a>
-              <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="Dead" data-control="markDead">
-                <i class="fas fa-skull"></i>
-              </a>
-              {{/if}}
-            </td>
-            <td class="combatant-values" colspan="2">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Crew'}}">{{localize 'CYPHERSYSTEM.Crew'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.crew}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            <td class="combatant-values" colspan="2">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.WeaponSystems'}}">{{localize 'CYPHERSYSTEM.WeaponSystems'}}</p>
-                {{#if (or c.isOwner c.isObserver)}}
-                <p>{{c.actor.data.data.weaponSystems}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            {{/if}}
-            {{!-- Marker --}}
-            {{#if (eq c.actor.data.type "Token")}}
-            <td class="combatant-buttons">
-              {{#if c.isGM}}
-              <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
-                <i class="fas fa-eye-slash"></i>
-              </a>
-              {{/if}}
-            </td>
-            <td class="combatant-values">
-            </td>
-            <td class="combatant-values">
-            </td>
-            <td class="combatant-values">
-              <div class="combat-input">
-                <p class="truncate" title="{{localize 'CYPHERSYSTEM.Quantity'}}">{{localize 'CYPHERSYSTEM.Quantity'}}</p>
-                {{#if c.isOwner}}
-                <input id="quantity" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
-                {{else if c.isObserver}}
-                <p>{{c.actor.data.data.quantity.value}}</p>
-                {{else}}<p>?</p>{{/if}}
-              </div>
-            </td>
-            {{/if}}
-          </tr>
-        </tbody>  
-      </table>
-    </div>
+    {{!-- Combatants' Info --}}
+    <section class="combatant-info">
+      {{!-- PCs --}}
+      {{#if (eq c.actor.data.type "PC")}}
+      <div class="combatant-buttons grid-span-4">
+        {{#if c.isGM}}
+        <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+          <i class="fas fa-eye-slash"></i>
+        </a>
+        {{/if}}
+        {{#if c.isOwner}}
+        <a class="combatant-control {{#if c.impaired}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Impaired'}}" data-control="markImpaired">
+          <i class="fas fa-heartbeat"></i>
+        </a>
+        <a class="combatant-control {{#if c.debilitated}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Debilitated'}}" data-control="markDebilitated">
+          <i class="fas fa-user-injured"></i>
+        </a>
+        <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Dead'}}" data-control="markDead">
+          <i class="fas fa-skull"></i>
+        </a>
+        {{/if}}
+      </div>
+        <div class="combat-input grid-span-2">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Might'}}">{{localize 'CYPHERSYSTEM.Might'}}</p>
+          {{#if c.isOwner}}
+          <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.pools.might.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+        <div class="combat-input grid-span-2">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Speed'}}">{{localize 'CYPHERSYSTEM.Speed'}}</p>
+          {{#if c.isOwner}}
+          <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.pools.speed.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+        <div class="combat-input grid-span-2">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Intellect'}}">{{localize 'CYPHERSYSTEM.Intellect'}}</p>
+          {{#if c.isOwner}}
+          <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.pools.intellect.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      {{/if}}
+      {{!-- NPCs & Companions --}}
+      {{#if (or (eq c.actor.data.type "NPC") (eq c.actor.data.type "Companion"))}}
+      <div class="combatant-buttons grid-span-2">
+        {{#if c.isGM}}
+        <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+          <i class="fas fa-eye-slash"></i>
+        </a>
+        <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Dead'}}" data-control="markDead">
+          <i class="fas fa-skull"></i>
+        </a>
+        {{/if}}
+      </div>
+      <div class="combatant-values grid-start-5 grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
+          {{#if c.isOwner}}
+          <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.health.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.damage}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.armor}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      {{/if}}
+      {{!-- Communitees --}}
+      {{#if (eq c.actor.data.type "Community")}}
+      <div class="combatant-buttons grid-span-2">
+        {{#if c.isGM}}
+        <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+          <i class="fas fa-eye-slash"></i>
+        </a>
+        <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Dead'}}" data-control="markDead">
+          <i class="fas fa-skull"></i>
+        </a>
+        {{/if}}
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Health'}}">{{localize 'CYPHERSYSTEM.Health'}}</p>
+          {{#if c.isOwner}}
+          <input id="health" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.health.value" value="{{c.actor.data.data.health.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.health.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Infrastructure'}}">{{localize 'CYPHERSYSTEM.Infrastructure'}}</p>
+          {{#if c.isOwner}}
+          <input id="infrastructure" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.infrastructure.value" value="{{c.actor.data.data.infrastructure.value}}" data-dtype="Number">
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.infrastructure.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Damage'}}">{{localize 'CYPHERSYSTEM.Damage'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.damage}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Armor'}}">{{localize 'CYPHERSYSTEM.Armor'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.armor}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      {{/if}}
+      {{!-- Vehicles --}}
+      {{#if (eq c.actor.data.type "Vehicle")}}
+      <div class="combatant-buttons grid-span-2">
+        {{#if c.isGM}}
+        <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+          <i class="fas fa-eye-slash"></i>
+        </a>
+        <a class="combatant-control {{#if c.isDefeated}}active{{/if}}" title="{{localize 'CYPHERSYSTEM.Dead'}}" data-control="markDead">
+          <i class="fas fa-skull"></i>
+        </a>
+        {{/if}}
+      </div>
+      <div class="combatant-values grid-start-5 grid-span-2">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Crew'}}">{{localize 'CYPHERSYSTEM.Crew'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.crew}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      <div class="combatant-values grid-span-4">
+        <div class="combat-input weapons">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.WeaponSystems'}}">{{localize 'CYPHERSYSTEM.WeaponSystems'}}</p>
+          {{#if (or c.isOwner c.isObserver)}}
+          <p>{{c.actor.data.data.weaponSystems}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      {{/if}}
+      {{!-- Marker --}}
+      {{#if (eq c.actor.data.type "Token")}}
+      <div class="combatant-buttons">
+        {{#if c.isGM}}
+        <a class="combatant-control {{#if c.hidden}}active{{/if}}" title="{{localize 'COMBAT.ToggleVis'}}" data-control="toggleHidden">
+          <i class="fas fa-eye-slash"></i>
+        </a>
+        {{/if}}
+      </div>
+      <div class="combatant-values grid-start-5 grid-span-4 markers">
+        <div class="combat-input">
+          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Quantity'}}">{{localize 'CYPHERSYSTEM.Quantity'}}</p>
+          {{#if c.isOwner}}
+          <div class="quantity">
+            <input id="quantity-value" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number"> / <input id="quantity-max" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.max" value="{{c.actor.data.data.quantity.max}}" data-dtype="Number">
+          </div>
+          {{else if c.isObserver}}
+          <p>{{c.actor.data.data.quantity.value}} / {{c.actor.data.data.quantity.value}}</p>
+          {{else}}<p>?</p>{{/if}}
+        </div>
+      </div>
+      {{/if}}
+    </section>
   </li>
   {{/if}}
   {{/each}}

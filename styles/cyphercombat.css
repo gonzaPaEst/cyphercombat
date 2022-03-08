@@ -1,18 +1,34 @@
-.grid-span-2 {
+#combat-tracker .grid-span-2 {
   grid-column-end: span 2;
 }
 
-.grid-span-10 {
-  grid-column-end: span 10;
+#combat-tracker .grid-span-4 {
+  grid-column-end: span 4;
 }
 
-#combat li.combatant.active {
+#combat-tracker .grid-start-5 {
+  grid-column-start: 5;
+}
+
+#combat-tracker .combatant-name {
+  grid-column-end: span 10;
+  grid-row-end: span 1;
+}
+
+#combat-tracker .combatant-info {
+  display: grid;
+  gap: 1px;
+  grid-column: span 10 / span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+#combat-tracker li.combatant.active {
   border-color: var(--color-border-highlight);
 }
 
-#combat li.combatant .token-image {
+#combat-tracker li.combatant .token-image {
   height: auto;
-  width: auto;
+  width: 100%;
 }
 
 #combat-tracker .defeated {
@@ -21,13 +37,43 @@
 
 #combat-tracker .combat-input {
   line-height: normal;
-  align-self: center;
   text-align: center;
+}
+
+#combat-tracker :is(div.markers, .weapons) {
+  width: fit-content;
+}
+
+#combat-tracker .markers p {
+  margin: 0 0 0 5px;
+}
+
+#combat-tracker .markers input {
+  width: 28px;
+  text-align: right;
+  background: none;
+  border: none;
+}
+
+#combat-tracker .markers input#quantity-value {
+  text-align: right;
+}
+
+#combat-tracker .markers input#quantity-max {
+  text-align: left;
+}
+
+#combat-tracker .markers .quantity {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: 3px;
+  text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
 #combat-tracker .combat-input input {
   color: white;
   height: 20px;
+  text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
 #combat-tracker .combat-input input.hidden {
@@ -38,40 +84,35 @@
   height: 20px;
   margin: 0;
   padding-top: 1px;
+  text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
 #combat-tracker li.combatant .token-name {
   align-self: center;
 }
 
-#combat-tracker .name-textbox {
-  height: 46px;
-  display: flex;
-  align-items: center;
-}
-
-#combat-tracker .img-div {
+#combat-tracker .img {
   line-height: normal;
-  text-align: center;
+  grid-row-end: span 3;
+  grid-column-end: span 2;
 }
 
 #combat-tracker li.combatant .roll {
   background-size: 20px;
   height: 20px;
-  margin: auto;
-  margin-bottom: 2px;
+  margin: -2px auto 2px;
 }
 
 #combat-tracker li.combatant .roll.hidden {
   filter: brightness(0.4);
 }
 
-#combat-tracker .combat-input label {
-  font-size: 0.7rem;
-}
-
 #combat-tracker .fa-solid {
   font-weight: 900;
+}
+
+#combat-tracker i {
+  text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
 #combat-tracker li.combatant .token-name .combatant-control {
@@ -88,17 +129,7 @@
 
 #combat-tracker .combatant-buttons {
   color: var(--color-text-dark-5);
-  text-align: left;
-  line-height: 1.3;
-  padding-top: 0;
-  padding-bottom: 3px;
-  max-width: 49px;
-  width: 49px;
-}
-
-#combat-tracker .combatant-buttons.pc {
-  max-width: 98px;
-  width: 98px;
+  grid-row-end: span 2;
 }
 
 #combat-tracker .combatant-buttons .active {
@@ -106,14 +137,17 @@
 }
 
 #combat-tracker .combatant-values {
-  text-align: center;
-  text-align: -webkit-center;
-  padding-top: 0;
-  max-width: 49px;
   width: 49px;
 }
 
 #combat-tracker .combatant {
+  display: grid;
+  gap: 1px;
+  grid-column: span 12 / span 12;
+  grid-row: span 3 / span 3;
+  grid-template-rows: repeat(3, minmax(0, 23px));
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  margin: 3px 0;
   padding: 1px;
 }
 
@@ -141,51 +175,19 @@
   border-bottom: 2px solid rgb(67, 223, 223, 0.3);
 }
 
-#combat #combat-tracker li.combatant .token-initiative span.initiative {
-  padding: 1.5px 3px;
-  background-size: 22px;
-  height: 22px;
-  margin: auto;
-  display: inline-block;
-  font-size: 0.85rem;
-}
-
-#combat-tracker .combat-table {
-  border: none;
-  background: none;
-  margin-bottom: 0;
-}
-
-#combat-tracker .combat-table .combatant-name {
-  width: 240px;
-}
-
-#combat-tracker .combat-table .combatant-name p {
-  width: 240px;
-  line-height: 1;
-  margin: 0;
+#combat-tracker .combatant-name h4 {
+  line-height: 2;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   text-shadow: 1px 1px 4px var(--color-shadow-dark);
 }
 
-#combat-tracker .combat-table .truncate {
+#combat-tracker .truncate {
   font-size: 0.7rem;
-  height: 16px;
-  margin: 0;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-#combat-tracker table tr:nth-child(even) {
-  background: none;
-}
-
-#combat-tracker table thead {
-  background: none;
-  border-bottom: none;
 }
 
 #combat-config div.form-group:first-of-type {
