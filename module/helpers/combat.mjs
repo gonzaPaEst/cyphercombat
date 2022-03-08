@@ -91,6 +91,7 @@ export class CypherCombatSidebar {
 
       let token;
 
+      // finds token on the canvas
       const findToken = (event) => {
         const combatant = event.currentTarget;
         const c = combatant.dataset.combatantId;
@@ -103,6 +104,7 @@ export class CypherCombatSidebar {
         return token;
       };
 
+      // highlights token when cursor points combatant in combat-tracker
       $('body').on('mouseenter', '.combatant', (event) => {
         findToken(event);
         if (token.isOwner || game.user.isGM) {
@@ -117,6 +119,27 @@ export class CypherCombatSidebar {
         token._onHoverOut();
       });
 
+      // pans to token when combatant image is clicked in combat-tracker
+      $('body').on('click', '.token-image', (event) => {
+        findToken(event);
+        if (token.isOwner || game.user.isGM) {
+          const scale = canvas.scene?._viewPosition.scale;
+          canvas.animatePan({ x: token.x, y: token.y, scale: scale, duration: 500 });
+          if (token && token.isVisible) {
+              canvas.animatePan({ ...token.center, duration: 250 });
+          }
+        }
+      });
+
+      // opens character sheet when combatant image is double-clicked in combat-tracker
+      $('body').on('dblclick', '.token-image', (event) => {
+        findToken(event);
+        if (token.isOwner || game.user.isGM) {
+          return token.actor?.sheet.render(true);
+        }
+      });
+
+      // hightlights combatant on current turn
       $('body').on('click', '.combat-control', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -142,6 +165,7 @@ export class CypherCombatSidebar {
         }
       });
 
+      // controls buttons to toggle visibility, mark damage track, and roll for initiative
       $('body').on('click', '.combatant-control', (event) => {
         event.preventDefault();
         event.stopPropagation();
@@ -150,7 +174,6 @@ export class CypherCombatSidebar {
         const combatant = game.combat.combatants.get(li.dataset.combatantId);
 
         switch (btn.dataset.control) {
-          // Toggle combatant visibility
           case "toggleHidden":
             toggleHidden(combatant)
             break;
@@ -171,7 +194,6 @@ export class CypherCombatSidebar {
           case "markDead":
             toggleDefeatedStatus(combatant);
             break;
-          // Roll combatant initiative
           case "rollInitiative":
             return game.combat.rollInitiative([combatant.id]);
         }
@@ -189,8 +211,7 @@ export class CypherCombatSidebar {
       }
     });
 
-    // When the combat tracker is rendered, we need to completely replace
-    // its HTML with a custom version.
+    // When the combat tracker is rendered, we need to completely replace its HTML with a custom version.
     Hooks.on('renderCombatTracker', async (app, html, options) => {
       // Find the combat element, which is where combatants are stored.
       let newHtml = html.find('#combat');
@@ -218,7 +239,7 @@ export class CypherCombatSidebar {
   }
 
   /*
-    Retrieve a list of combatants for the current combat. Combatants will be sorted into groups by actor type.
+    Retrieve a list of combatants for the current combat.
    */
   getCombatantsData() {
     // If there isn't a combat, exit and return an empty array.

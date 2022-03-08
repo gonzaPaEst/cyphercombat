@@ -40,6 +40,10 @@
   width: 100%;
 }
 
+#combat-tracker li.combatant .token-image:hover {
+  cursor: alias;
+}
+
 #combat-tracker .defeated {
   color: #b32019;
 }
