@@ -31,8 +31,9 @@
 }
 
 #combat-tracker li.combatant .token-image {
-  width: 100%;
+  height: auto;
   margin: 2px auto 0;
+  width: 100%;
 }
 
 #combat-tracker .defeated {
@@ -104,6 +105,7 @@
 #combat-tracker .combatant-buttons {
   color: var(--color-text-dark-5);
   grid-row-end: span 2;
+  padding-left: 5px;
 }
 
 #combat-tracker .combatant-buttons .active {
@@ -116,7 +118,7 @@
 
 #combat-tracker .combatant {
   display: grid;
-  gap: 5px;
+  row-gap: 5px;
   grid-column: span 12 / span 12;
   grid-row: span 3 / span 3;
   grid-template-rows: repeat(3, minmax(0, 23px));
@@ -151,10 +153,11 @@
 
 #combat-tracker .combatant-name h4 {
   line-height: 2;
-  white-space: nowrap;
   overflow: hidden;
+  padding-left: 5px;
   text-overflow: ellipsis;
   text-shadow: 1px 1px 4px var(--color-shadow-dark);
+  white-space: nowrap;
 }
 
 #combat-tracker .truncate {
