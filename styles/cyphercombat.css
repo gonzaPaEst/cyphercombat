@@ -10,6 +10,10 @@
   grid-column-start: 5;
 }
 
+#combat-tracker .grid-start-7 {
+  grid-column-start: 7;
+}
+
 #combat-tracker .combatant-name {
   grid-column-end: span 10;
   grid-row-end: span 1;
