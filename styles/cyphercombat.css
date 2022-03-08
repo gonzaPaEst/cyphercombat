@@ -50,6 +50,10 @@
   height: 20px;
 }
 
+#combat-tracker .boxes {
+  padding-top: 8px;
+}
+
 #combat-tracker .combat-input input.hidden {
   color: var(--color-text-light-7);
 }
@@ -58,6 +62,10 @@
   height: 20px;
   margin: 0;
   padding-top: 1px;
+}
+
+#combat-tracker .combat-input .input-label {
+  padding-top: 5px;
 }
 
 #combat-tracker li.combatant .token-name {
@@ -106,6 +114,7 @@
   color: var(--color-text-dark-5);
   grid-row-end: span 2;
   padding-left: 5px;
+  padding-top: 14px;
 }
 
 #combat-tracker .combatant-buttons .active {
@@ -158,6 +167,7 @@
   text-overflow: ellipsis;
   text-shadow: 1px 1px 4px var(--color-shadow-dark);
   white-space: nowrap;
+  margin: 8px 0 0 0;
 }
 
 #combat-tracker .truncate {
