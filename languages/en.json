@@ -1,0 +1,8 @@
+{
+    "CYPHER-COMBAT": {
+      "token-img": {
+          "Name": "Use Token Image",
+          "Hint": "Use the combatant's token image instead of its actor's sheet image in the combat tracker."
+      }
+    }
+}

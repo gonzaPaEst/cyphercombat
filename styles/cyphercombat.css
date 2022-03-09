@@ -35,9 +35,8 @@
 }
 
 #combat-tracker li.combatant .token-image {
-  height: auto;
   margin: 2px auto 0;
-  width: 100%;
+  width: auto;
 }
 
 #combat-tracker li.combatant .token-image:hover {

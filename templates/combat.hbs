@@ -4,7 +4,13 @@
   <li class="combatant {{#if c.hidden}}hidden{{/if}} {{#if (eq c.actor.data.type "PC")}}PC{{else}}{{disposition c.token.data.disposition}}{{/if}} directory-item actor-elem {{#if c.active}}active{{/if}}" data-actor-id="{{c.actor.data._id}}" data-token-id="{{c.tokenId}}" data-combatant-id="{{this.id}}" data-actor-type="{{c.actor.data.type}}">
     {{!-- Token image --}}
     <section class="img">
-      <img class="token-image" id="combat-img" src="{{c.actor.img}}" alt="Thumbnail image for {{c.name}}">
+      <img class="token-image" id="combat-img" src="
+      {{#if c.tokenImg}}
+        {{c.img}}
+      {{else}}
+        {{c.actor.img}}
+      {{/if}}
+      " alt="Thumbnail image for {{c.name}}">
       <div class="token-initiative">
         {{#if c.hasRolled}}
         {{#if (eq c.actor.data.type "PC")}}
