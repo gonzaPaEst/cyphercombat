@@ -276,7 +276,12 @@ export class CypherCombatSidebar {
         // Determine if combatant image is token image
         let tokenImg = game.settings.get('cyphercombat', 'token-image');
         combatant.tokenImg = tokenImg === true;
+
+        // Determine if combatants get background colors
+        let combatantColor = game.settings.get('cyphercombat', 'combatant-color');
+        combatant.combatantColor = combatantColor === true;
       }
+      
       // Append actors
       combatants.push(combatant)
     }

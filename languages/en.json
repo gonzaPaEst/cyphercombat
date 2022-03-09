@@ -3,6 +3,10 @@
       "token-img": {
           "Name": "Use Token Image",
           "Hint": "Use the combatant's token image instead of its actor's sheet image in the combat tracker."
-      }
+      },
+      "combatant-color": {
+        "Name": "Color-Code Combatants",
+        "Hint": "PCs get a green background color in the Combat Tracker; all other combatants' backgrounds are color-coded per their token disposition: Friendly (blue), Neutral (yellow), and Hostile (red)."
+    }
     }
 }

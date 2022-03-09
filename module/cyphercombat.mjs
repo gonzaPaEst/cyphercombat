@@ -28,4 +28,16 @@ Hooks.on('init', () => {
          }, 500)
     });
 
+    game.settings.register('cyphercombat', 'combatant-color', {
+        name: game.i18n.localize("CYPHER-COMBAT.combatant-color.Name"),
+        default: true,
+        type: Boolean,
+        scope: 'world',
+        config: true,
+        hint: game.i18n.localize("CYPHER-COMBAT.combatant-color.Hint"),
+        onChange: () => setTimeout(() => {
+            location.reload();
+         }, 500)
+    });
+
 });
