@@ -4,10 +4,6 @@ This [Foundry VTT](https://foundryvtt.com/) module replaces the default combat t
 
 ---
 
-## How It Works
-
----
-
 ## Installation
 
 To install and use the Cypher System Combat Tracker module, simply find it and download it in the **Install Module** dialog on the Setup menu of the Foundry VTT application. Alternatively, paste the following Manifest URL:
