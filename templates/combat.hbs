@@ -46,30 +46,30 @@
         </a>
         {{/if}}
       </div>
-        <div class="combat-input grid-span-2">
-          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Might'}}">{{localize 'CYPHERSYSTEM.Might'}}</p>
-          {{#if c.isOwner}}
-          <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
-          {{else if c.isObserver}}
-          <p>{{c.actor.data.data.pools.might.value}}</p>
-          {{else}}<p>?</p>{{/if}}
-        </div>
-        <div class="combat-input grid-span-2">
-          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Speed'}}">{{localize 'CYPHERSYSTEM.Speed'}}</p>
-          {{#if c.isOwner}}
-          <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
-          {{else if c.isObserver}}
-          <p>{{c.actor.data.data.pools.speed.value}}</p>
-          {{else}}<p>?</p>{{/if}}
-        </div>
-        <div class="combat-input grid-span-2">
-          <p class="truncate" title="{{localize 'CYPHERSYSTEM.Intellect'}}">{{localize 'CYPHERSYSTEM.Intellect'}}</p>
-          {{#if c.isOwner}}
-          <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
-          {{else if c.isObserver}}
-          <p>{{c.actor.data.data.pools.intellect.value}}</p>
-          {{else}}<p>?</p>{{/if}}
-        </div>
+      <div class="combat-input grid-span-2">
+        <p class="truncate" title="{{localize 'CYPHERSYSTEM.Might'}}">{{localize 'CYPHERSYSTEM.Might'}}</p>
+        {{#if c.isOwner}}
+        <input id="might" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.might.value" value="{{c.actor.data.data.pools.might.value}}" data-dtype="Number">
+        {{else if c.isObserver}}
+        <p>{{c.actor.data.data.pools.might.value}}</p>
+        {{else}}<p>?</p>{{/if}}
+      </div>
+      <div class="combat-input grid-span-2">
+        <p class="truncate" title="{{localize 'CYPHERSYSTEM.Speed'}}">{{localize 'CYPHERSYSTEM.Speed'}}</p>
+        {{#if c.isOwner}}
+        <input id="speed" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.speed.value" value="{{c.actor.data.data.pools.speed.value}}" data-dtype="Number">
+        {{else if c.isObserver}}
+        <p>{{c.actor.data.data.pools.speed.value}}</p>
+        {{else}}<p>?</p>{{/if}}
+      </div>
+      <div class="combat-input grid-span-2">
+        <p class="truncate" title="{{localize 'CYPHERSYSTEM.Intellect'}}">{{localize 'CYPHERSYSTEM.Intellect'}}</p>
+        {{#if c.isOwner}}
+        <input id="intellect" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.pools.intellect.value" value="{{c.actor.data.data.pools.intellect.value}}" data-dtype="Number">
+        {{else if c.isObserver}}
+        <p>{{c.actor.data.data.pools.intellect.value}}</p>
+        {{else}}<p>?</p>{{/if}}
+      </div>
       {{/if}}
       {{!-- NPCs & Companions --}}
       {{#if (or (eq c.actor.data.type "NPC") (eq c.actor.data.type "Companion"))}}
@@ -171,7 +171,7 @@
         </a>
         {{/if}}
       </div>
-      <div class="combatant-values grid-start-5 grid-span-2">
+      <div class="combatant-values grid-start-7 grid-span-2">
         <div class="combat-input">
           <p class="truncate" title="{{localize 'CYPHERSYSTEM.Crew'}}">{{localize 'CYPHERSYSTEM.Crew'}}</p>
           {{#if (or c.isOwner c.isObserver)}}
@@ -197,12 +197,12 @@
         </a>
         {{/if}}
       </div>
-      <div class="combatant-values grid-start-5 grid-span-2">
+      <div class="combatant-values grid-start-7 grid-span-2">
         <div class="combat-input">
           <p class="truncate" title="{{localize 'CYPHERSYSTEM.Quantity'}}">{{localize 'CYPHERSYSTEM.Quantity'}}</p>
           {{#if c.isOwner}}
           {{!-- <div class="quantity"> --}}
-            <input id="quantity-value" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
+          <input id="quantity-value" class="combat-input {{#if c.hidden}}hidden{{/if}}" type="text" name="data.quantity.value" value="{{c.actor.data.data.quantity.value}}" data-dtype="Number">
           {{!-- </div> --}}
           {{else if c.isObserver}}
           <p>{{c.actor.data.data.quantity.value}}</p>
@@ -212,11 +212,11 @@
       <div class="combatant-values grid-span-2">
         <div class="combat-input">
           <p class="truncate" title="Max">Max</p>
-        {{#if (or c.isOwner c.isObserver)}}
+          {{#if (or c.isOwner c.isObserver)}}
           <p>{{c.actor.data.data.quantity.max}}</p>
-        {{else}}<p>?</p>{{/if}}
-      </div>
-      {{/if}}
+          {{else}}<p>?</p>{{/if}}
+        </div>
+        {{/if}}
     </section>
   </li>
   {{/if}}
