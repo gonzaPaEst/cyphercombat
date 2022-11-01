@@ -21,7 +21,7 @@ export class CypherCombatSidebar {
         }
 
         // Retrieve the combatant for this actor, or exit if not valid.
-        const combatant = game.combat.data.combatants.find(c => c.data._id == $actorRow.data('combatant-id'));
+        const combatant = game.combat.combatants.find(c => c._id == $actorRow.data('combatant-id'));
         if (!combatant) {
           return;
         }
@@ -34,16 +34,16 @@ export class CypherCombatSidebar {
           value = Number(value);
           if (Number.isNaN(value)) {
             if ($input[0].id == "might") {
-              $input.val(actor.data.data.pools.might.value);
+              $input.val(actor.system.pools.might.value);
             }
             if ($input[0].id == "speed") {
-              $input.val(actor.data.data.pools.speed.value);
+              $input.val(actor.system.pools.speed.value);
             }
             if ($input[0].id == "intellect") {
-              $input.val(actor.data.data.pools.intellect.value);
+              $input.val(actor.system.pools.intellect.value);
             }
             if ($input[0].id == "health") {
-              $input.val(actor.data.data.health.value);
+              $input.val(actor.system.health.value);
             }
             return false;
           }
@@ -55,22 +55,22 @@ export class CypherCombatSidebar {
         let operation = $input.val().match(/^\+|\-/g);
         if (operation) {
           if ($input[0].id == "might") {
-            updateData[$input.attr('name')] = Number(actor.data.data.pools.might.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.pools.might.value) + value;
           }
           if ($input[0].id == "speed") {
-            updateData[$input.attr('name')] = Number(actor.data.data.pools.speed.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.pools.speed.value) + value;
           }
           if ($input[0].id == "intellect") {
-            updateData[$input.attr('name')] = Number(actor.data.data.pools.intellect.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.pools.intellect.value) + value;
           }
           if ($input[0].id == "health") {
-            updateData[$input.attr('name')] = Number(actor.data.data.health.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.health.value) + value;
           }
           if ($input[0].id == "infrastructure") {
-            updateData[$input.attr('name')] = Number(actor.data.data.infrastructure.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.infrastructure.value) + value;
           }
           if ($input[0].id == "quantity") {
-            updateData[$input.attr('name')] = Number(actor.data.data.quantity.value) + value;
+            updateData[$input.attr('name')] = Number(actor.system.quantity.value) + value;
           }
         }
         // Otherwise, set it absolutely.
@@ -97,7 +97,7 @@ export class CypherCombatSidebar {
         const c = combatant.dataset.combatantId;
         for (let t of canvas.tokens.placeables) {
           if (t.combatant) {
-            if (t.combatant.data._id == c) { token = t };
+            if (t.combatant._id == c) { token = t };
           }
         }
 
@@ -178,17 +178,17 @@ export class CypherCombatSidebar {
             toggleHidden(combatant)
             break;
           case "markImpaired":
-            if (combatant.actor.data.data.damage.damageTrack == "Impaired") {
-              combatant.actor.update({ "data.damage.damageTrack": 'Hale' })
+            if (combatant.actor.system.combat.damageTrack.state == "Impaired") {
+              combatant.actor.update({ "system.combat.damageTrack.state": 'Hale' })
             } else {
-              combatant.actor.update({ "data.damage.damageTrack": 'Impaired' })
+              combatant.actor.update({ "system.combat.damageTrack.state": 'Impaired' })
             }
             break;
           case "markDebilitated":
-            if (combatant.actor.data.data.damage.damageTrack == "Debilitated") {
-              combatant.actor.update({ "data.damage.damageTrack": 'Hale' })
+            if (combatant.actor.system.combat.damageTrack.state == "Debilitated") {
+              combatant.actor.update({ "system.combat.damageTrack.state": 'Hale' })
             } else {
-              combatant.actor.update({ "data.damage.damageTrack": 'Debilitated' })
+              combatant.actor.update({ "system.combat.damageTrack.state": 'Debilitated' })
             }
             break;
           case "markDead":
@@ -231,9 +231,8 @@ export class CypherCombatSidebar {
         };
 
         // Render the template and update the markup with our new version.
-        let content = await renderTemplate(template, templateData)
-        newHtml.find('#combat-tracker').remove();
-        newHtml.find('#combat-round').after(content);
+        let content = await renderTemplate(template, templateData);
+        newHtml.find('#combat-tracker').replaceWith(content);
       }
     });
   }
@@ -243,7 +242,7 @@ export class CypherCombatSidebar {
    */
   getCombatantsData() {
     // If there isn't a combat, exit and return an empty array.
-    if (!game.combat || !game.combat.data) {
+    if (!game.combat || !game.combat) {
       return [];
     }
 
@@ -255,9 +254,9 @@ export class CypherCombatSidebar {
         game.combat.deleteEmbeddedDocuments('Combatant', [combatant.id]);
       } else {
         // Establish PC's damage track
-        let type = combatant.actor.data.type;
-        if (type == 'PC') {
-          let damageTrack = combatant.actor.data.data.damage.damageTrack;
+        let type = combatant.actor.type;
+        if (type == 'pc') {
+          let damageTrack = combatant.actor.system.combat.damageTrack.state;
           combatant.dead = damageTrack == 'Dead';
           combatant.debilitated = damageTrack == 'Debilitated';
           combatant.impaired = damageTrack == 'Impaired';
@@ -268,10 +267,10 @@ export class CypherCombatSidebar {
 
         // Set a property for whether or not this is editable. This controls whether editabel fields like HP will be shown as an input or a div in the combat tracker HTML template.
         combatant.isGM = game.user.isGM;
-        combatant.isObserver = (combatant.actor.permission == 2) ? true : false;
+        combatant.isObserver = (combatant.actor.permission == CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) ? true : false;
 
         // Determine if combatant is active
-        combatant.active = (combatant.data.tokenId == game.combat.combatant.data.tokenId && game.combat.started) ? true : false;
+        combatant.active = (combatant.tokenId == game.combat.combatant.tokenId && game.combat.started) ? true : false;
 
         // Determine if combatant image is token image
         let tokenImg = game.settings.get('cyphercombat', 'token-image');
