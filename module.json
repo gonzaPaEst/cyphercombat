@@ -1,22 +1,31 @@
 {
+  "id": "cyphercombat",
   "name": "cyphercombat",
   "title": "Cypher System Combat Tracker",
   "description": "Replaces the default Foundry combat tracker with one made specifically for the Cypher System",
-  "author": "gonzaPaEst",
-  "version": "1.1",
-  "minimumCoreVersion": "9",
-  "compatibleCoreVersion": "9",
-  "system": "cyphersystem",
-  "dependencies": [
-    {
-      "name": "cyphersystem",
-      "type": "system"
-    }
-  ],
-  "esmodules": ["/module/cyphercombat.mjs"],
+  "authors": [{ "name": "gonzaPaEst"}],
+  "version": "1.2",
+  "minimumCoreVersion": "10",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "10.288"
+  },
+  "relationships": {
+    "systems": [
+      {
+        "id": "cyphersystem",
+        "type": "system",
+        "manifest": "https://raw.githubusercontent.com/mrkwnzl/cyphersystem-foundryvtt/main/system.json",
+        "compatibility": {
+          "verified": "2.0.0"
+        }
+      }
+    ]
+  },
+  "esmodules": ["./module/cyphercombat.mjs"],
   "scripts": [],
   "socket": true,
-  "styles": ["/styles/cyphercombat.css"],
+  "styles": ["./styles/cyphercombat.css"],
   "languages": [
     {
       "lang": "en",

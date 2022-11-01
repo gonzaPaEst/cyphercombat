@@ -270,7 +270,7 @@ export class CypherCombatSidebar {
         combatant.isObserver = (combatant.actor.permission == CONST.DOCUMENT_PERMISSION_LEVELS.OBSERVER) ? true : false;
 
         // Determine if combatant is active
-        combatant.active = (combatant.tokenId == game.combat.combatant.tokenId && game.combat.started) ? true : false;
+        combatant.active = (game.combat.started && combatant.tokenId == game.combat.combatant.tokenId) ? true : false;
 
         // Determine if combatant image is token image
         let tokenImg = game.settings.get('cyphercombat', 'token-image');
