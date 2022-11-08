@@ -3,7 +3,7 @@
   "title": "Cypher System Combat Tracker",
   "description": "Replaces the default Foundry combat tracker with one made specifically for the Cypher System",
   "author": "gonzaPaEst",
-  "version": "1.1",
+  "version": "1.2",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "system": "cyphersystem",
@@ -25,6 +25,6 @@
     }
   ],
   "url": "https://github.com/gonzaPaEst/cyphercombat",
-  "manifest": "https://raw.githubusercontent.com/gonzaPaEst/cyphercombat/main/module.json",
-  "download": "https://github.com/gonzaPaEst/cyphercombat/releases/latest/download/cyphercombat-main.zip"
+  "manifest": "https://raw.githubusercontent.com/gonzaPaEst/cyphercombat/v1.2/module.json",
+  "download": "https://github.com/gonzaPaEst/cyphercombat/releases/download/v1.2/cyphercombat-main.zip"
 }
