@@ -1,39 +1,47 @@
 {
-  "id": "cyphercombat",
-  "name": "cyphercombat",
-  "title": "Cypher System Combat Tracker",
-  "description": "Replaces the default Foundry combat tracker with one made specifically for the Cypher System",
-  "authors": [{ "name": "gonzaPaEst"}],
-  "version": "1.2",
-  "minimumCoreVersion": "10",
-  "compatibility": {
-    "minimum": "10",
-    "verified": "10.288"
-  },
-  "relationships": {
-    "systems": [
-      {
-        "id": "cyphersystem",
-        "type": "system",
-        "manifest": "https://raw.githubusercontent.com/mrkwnzl/cyphersystem-foundryvtt/main/system.json",
-        "compatibility": {
-          "verified": "2.0.0"
+    "id": "cyphercombat",
+    "name": "cyphercombat",
+    "title": "Cypher System Combat Tracker",
+    "description": "Replaces the default Foundry combat tracker with one made specifically for the Cypher System",
+    "authors": [
+        {
+            "name": "gonzaPaEst"
         }
-      }
-    ]
-  },
-  "esmodules": ["./module/cyphercombat.mjs"],
-  "scripts": [],
-  "socket": true,
-  "styles": ["./styles/cyphercombat.css"],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
-  ],
-  "url": "https://github.com/gonzaPaEst/cyphercombat",
-  "manifest": "https://raw.githubusercontent.com/gonzaPaEst/cyphercombat/main/module.json",
-  "download": "https://github.com/gonzaPaEst/cyphercombat/releases/latest/download/cyphercombat-main.zip"
+    ],
+    "version": "1.2.1",
+    "minimumCoreVersion": "10",
+    "compatibility": {
+        "minimum": "10",
+        "verified": "10.288"
+    },
+    "relationships": {
+        "systems": [
+            {
+                "id": "cyphersystem",
+                "type": "system",
+                "manifest": "https://raw.githubusercontent.com/mrkwnzl/cyphersystem-foundryvtt/main/system.json",
+                "compatibility": {
+                    "verified": "2.0.0"
+                }
+            }
+        ]
+    },
+    "esmodules": [
+        "./module/cyphercombat.mjs"
+    ],
+    "scripts": [],
+    "socket": true,
+    "styles": [
+        "./styles/cyphercombat.css"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "languages/en.json"
+        }
+    ],
+    "url": "https://github.com/farling42/cyphercombat",
+    "manifest": "https://github.com/farling42/cyphercombat/releases/latest/download/module.json",
+    "download": "https://github.com/farling42/cyphercombat/releases/download/1.2.1/module.zip"
 }
