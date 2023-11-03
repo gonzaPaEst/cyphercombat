@@ -109,7 +109,7 @@ export class CypherCombatSidebar {
         findToken(event);
         if (token.isOwner || game.user.isGM) {
           if (token?.isVisible) {
-            if (!token._controlled) token._onHoverIn();
+            if (!token.controlled) token._onHoverIn(event, {hoverOutOthers: true});
           }
         }
       });
