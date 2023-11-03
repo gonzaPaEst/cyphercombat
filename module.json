@@ -11,8 +11,8 @@
     "version": "1.2.1",
     "minimumCoreVersion": "10",
     "compatibility": {
-        "minimum": "10",
-        "verified": "10.288"
+        "minimum": "11",
+        "verified": "11.314"
     },
     "relationships": {
         "systems": [
